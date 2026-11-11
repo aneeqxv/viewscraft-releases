@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Download ViewsCraft</title>
+    <meta name="description" content="ViewsCraft turns a script into an animated YouTube Short on your own computer. One download, one click to install." />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3CradialGradient id='g' cx='0' cy='0' r='1.4'%3E%3Cstop offset='0' stop-color='%23ffb04d'/%3E%3Cstop offset='.5' stop-color='%23f2502a'/%3E%3Cstop offset='1' stop-color='%23a8121a'/%3E%3C/radialGradient%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-family='Segoe UI,Arial' font-weight='800' font-size='36' fill='%23fff'%3EV%3C/text%3E%3C/svg%3E" />
+    <style>
+      /* Same colours as the app (src/styles.css, electron/gate.html), so the page and the app feel like one product. */
+      * { box-sizing: border-box; }
+      html, body { min-height: 100%; margin: 0; }
+      body {
+        background: #0c0808 radial-gradient(720px 420px at 50% -120px, rgba(150, 24, 22, 0.4), transparent 70%) no-repeat;
+        color: #fbf3ef;
+        font: 16px/1.5 -apple-system, "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        display: flex; align-items: center; justify-content: center;
+        min-height: 100vh; padding: 48px 16px;
+      }
+      main { width: 100%; max-width: 460px; text-align: center; }
+      .mark {
+        width: 76px; height: 76px; border-radius: 20px; margin: 0 auto 26px;
+        background: linear-gradient(135deg, #ffb04d, #f2502a 50%, #a8121a);
+        display: grid; place-items: center; font-weight: 800; font-size: 34px; color: #fff;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+      }
+      h1 { font-size: 34px; font-weight: 650; letter-spacing: -0.02em; line-height: 1.15; margin: 0 0 12px; text-wrap: balance; }
+      .lead { color: #b8a49f; margin: 0 auto 34px; max-width: 380px; text-wrap: pretty; }
+      .get {
+        display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+        width: 100%; max-width: 320px; padding: 17px 24px; border-radius: 14px;
+        background: linear-gradient(135deg, #f04a2c, #d9261f); color: #fff;
+        font-size: 18px; font-weight: 600; text-decoration: none;
+        box-shadow: 0 12px 34px rgba(217, 38, 31, 0.35);
+        transition: filter 0.15s, transform 0.15s;
+      }
+      .get:hover { filter: brightness(1.1); transform: translateY(-1px); }
+      .get:active { transform: translateY(0); }
+      .get:focus-visible { outline: 3px solid #ffa75a; outline-offset: 3px; }
+      .get svg { width: 20px; height: 20px; flex: none; }
+      .get.off { background: #211616; color: #7f6c67; box-shadow: none; pointer-events: none; }
+      .meta { color: #7f6c67; font-size: 13px; margin: 14px 0 0; min-height: 20px; }
+      ol {
+        list-style: none; margin: 44px 0 0; padding: 22px 22px 6px; text-align: left;
+        background: rgba(33, 22, 22, 0.6); border: 1px solid rgba(255, 214, 200, 0.08); border-radius: 16px;
+        counter-reset: step;
+      }
+      li { counter-increment: step; position: relative; padding: 0 0 16px 40px; color: #b8a49f; font-size: 14px; }
+      li::before {
+        content: counter(step); position: absolute; left: 0; top: 0;
+        width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center;
+        background: rgba(255, 167, 90, 0.12); color: #ffa75a; font-size: 13px; font-weight: 600;
+      }
+      li b { display: block; color: #fbf3ef; font-weight: 600; font-size: 15px; }
+      .foot { color: #7f6c67; font-size: 13px; margin: 22px 0 0; }
+      .foot a { color: #ffa75a; text-decoration: none; }
+      .foot a:hover { text-decoration: underline; }
+      @media (max-width: 420px) { h1 { font-size: 28px; } }
+      @media (prefers-reduced-motion: reduce) { .get { transition: none; } }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="mark" aria-hidden="true">V</div>
+      <h1>Make animated Shorts on your own computer</h1>
+      <p class="lead">ViewsCraft turns a script into a finished YouTube Short. Free for Content Cartel members.</p>
+
+      <a id="get" class="get" href="https://github.com/aneeqxv/viewscraft-releases/releases/latest">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 20h14" /></svg>
+        <span id="label">Download ViewsCraft</span>
+      </a>
+      <p id="meta" class="meta">For Windows 10 and 11</p>
+
+      <ol>
+        <li><b>Download</b>Press the button. The file is big, so give it a minute.</li>
+        <li><b>Open the file</b>ViewsCraft installs and opens by itself. If Windows shows a blue “Windows protected your PC” box, click <b style="display:inline;font-size:14px">More info</b>, then <b style="display:inline;font-size:14px">Run anyway</b>.</li>
+        <li><b>Log in with Skool</b>Use your Content Cartel account and start your first video. Next time, open ViewsCraft from the icon on your desktop.</li>
+      </ol>
+
+      <p class="foot">Not a member yet? <a href="https://www.skool.com/content-cartel-free-6805">Join Content Cartel free</a></p>
+    </main>
+
+    <script>
+      // Points the button straight at the newest installer on GitHub, so it never needs changing
+      // when an update is published. If GitHub can't be asked, the button opens the releases page.
+      (async function () {
+        const get = document.getElementById("get");
+        const label = document.getElementById("label");
+        const meta = document.getElementById("meta");
+        try {
+          const r = await fetch("https://api.github.com/repos/aneeqxv/viewscraft-releases/releases/latest", {
+            headers: { Accept: "application/vnd.github+json" },
+          });
+          if (r.status === 404) {
+            // nothing has been published yet
+            get.classList.add("off");
+            get.removeAttribute("href");
+            label.textContent = "Coming soon";
+            meta.textContent = "The first version isn't out yet. Check back shortly.";
+            return;
+          }
+          if (!r.ok) return;
+          const release = await r.json();
+          const file = (release.assets || []).find((a) => /^ViewsCraft-Setup-.*\.exe$/i.test(a.name));
+          if (!file) return;
+          get.href = file.browser_download_url;
+          const version = String(release.tag_name || "").replace(/^v/, "");
+          const mb = Math.round(file.size / 1048576);
+          meta.textContent = `Version ${version} · ${mb} MB · Windows 10 and 11`;
+        } catch (e) {
+          /* offline or blocked: the button still opens the releases page */
+        }
+      })();
+    </script>
+  </body>
+</html>
