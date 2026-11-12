@@ -11,8 +11,8 @@
       * { box-sizing: border-box; }
       html, body { min-height: 100%; margin: 0; }
       body {
-        background: #0c0808 radial-gradient(720px 420px at 50% -120px, rgba(150, 24, 22, 0.4), transparent 70%) no-repeat;
-        color: #fbf3ef;
+        background: #070a16 radial-gradient(720px 420px at 50% -120px, rgba(36, 86, 210, 0.38), transparent 70%) no-repeat;
+        color: #f2f5fc;
         font: 16px/1.5 -apple-system, "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
         -webkit-font-smoothing: antialiased;
         display: flex; align-items: center; justify-content: center;
@@ -24,35 +24,35 @@
         filter: drop-shadow(0 16px 30px rgba(0, 0, 0, 0.55));
       }
       h1 { font-size: 34px; font-weight: 650; letter-spacing: -0.02em; line-height: 1.15; margin: 0 0 12px; text-wrap: balance; }
-      .lead { color: #b8a49f; margin: 0 auto 34px; max-width: 380px; text-wrap: pretty; }
+      .lead { color: #a3aecb; margin: 0 auto 34px; max-width: 380px; text-wrap: pretty; }
       .get {
         display: inline-flex; align-items: center; justify-content: center; gap: 10px;
         width: 100%; max-width: 320px; padding: 17px 24px; border-radius: 14px;
-        background: linear-gradient(135deg, #f04a2c, #d9261f); color: #fff;
+        background: linear-gradient(135deg, #4a94f7, #1f62d6); color: #fff;
         font-size: 18px; font-weight: 600; text-decoration: none;
-        box-shadow: 0 12px 34px rgba(217, 38, 31, 0.35);
+        box-shadow: 0 12px 34px rgba(36, 86, 210, 0.4);
         transition: filter 0.15s, transform 0.15s;
       }
       .get:hover { filter: brightness(1.1); transform: translateY(-1px); }
       .get:active { transform: translateY(0); }
-      .get:focus-visible { outline: 3px solid #ffa75a; outline-offset: 3px; }
+      .get:focus-visible { outline: 3px solid #86dc5c; outline-offset: 3px; }
       .get svg { width: 20px; height: 20px; flex: none; }
-      .get.off { background: #211616; color: #7f6c67; box-shadow: none; pointer-events: none; }
-      .meta { color: #7f6c67; font-size: 13px; margin: 14px 0 0; min-height: 20px; }
+      .get.off { background: #171e36; color: #6c7798; box-shadow: none; pointer-events: none; }
+      .meta { color: #6c7798; font-size: 13px; margin: 14px 0 0; min-height: 20px; }
       ol {
         list-style: none; margin: 44px 0 0; padding: 22px 22px 6px; text-align: left;
-        background: rgba(33, 22, 22, 0.6); border: 1px solid rgba(255, 214, 200, 0.08); border-radius: 16px;
+        background: rgba(15, 20, 38, 0.7); border: 1px solid rgba(190, 210, 255, 0.07); border-radius: 16px;
         counter-reset: step;
       }
-      li { counter-increment: step; position: relative; padding: 0 0 16px 40px; color: #b8a49f; font-size: 14px; }
+      li { counter-increment: step; position: relative; padding: 0 0 16px 40px; color: #a3aecb; font-size: 14px; }
       li::before {
         content: counter(step); position: absolute; left: 0; top: 0;
         width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center;
-        background: rgba(255, 167, 90, 0.12); color: #ffa75a; font-size: 13px; font-weight: 600;
+        background: rgba(47, 125, 240, 0.18); color: #4a90f5; font-size: 13px; font-weight: 600;
       }
-      li b { display: block; color: #fbf3ef; font-weight: 600; font-size: 15px; }
-      .foot { color: #7f6c67; font-size: 13px; margin: 22px 0 0; }
-      .foot a { color: #ffa75a; text-decoration: none; }
+      li b { display: block; color: #f2f5fc; font-weight: 600; font-size: 15px; }
+      .foot { color: #6c7798; font-size: 13px; margin: 22px 0 0; }
+      .foot a { color: #86dc5c; text-decoration: none; }
       .foot a:hover { text-decoration: underline; }
       @media (max-width: 420px) { h1 { font-size: 28px; } }
       @media (prefers-reduced-motion: reduce) { .get { transition: none; } }
