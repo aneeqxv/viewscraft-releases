@@ -39,6 +39,10 @@
       .get svg { width: 20px; height: 20px; flex: none; }
       .get.off { background: #171e36; color: #6c7798; box-shadow: none; pointer-events: none; }
       .meta { color: #6c7798; font-size: 13px; margin: 14px 0 0; min-height: 20px; }
+      .other { font-size: 13px; margin: 6px 0 0; }
+      .other a { color: #86dc5c; text-decoration: none; }
+      .other a:hover { text-decoration: underline; }
+      ol[hidden] { display: none; }
       ol {
         list-style: none; margin: 44px 0 0; padding: 22px 22px 6px; text-align: left;
         background: rgba(15, 20, 38, 0.7); border: 1px solid rgba(190, 210, 255, 0.07); border-radius: 16px;
@@ -69,46 +73,87 @@
         <span id="label">Download ViewsCraft</span>
       </a>
       <p id="meta" class="meta">For Windows 10 and 11</p>
+      <p class="other"><a id="other" href="#mac" data-viewscraft-mac="1">Download for Mac instead</a></p>
 
-      <ol>
+      <ol id="steps-win">
         <li><b>Download</b>Press the button. The file is big, so give it a minute.</li>
         <li><b>Open the file</b>ViewsCraft installs and opens by itself. If Windows shows a blue “Windows protected your PC” box, click <b style="display:inline;font-size:14px">More info</b>, then <b style="display:inline;font-size:14px">Run anyway</b>.</li>
         <li><b>Log in with Skool</b>Use your Views Craft account and start your first video. Next time, open ViewsCraft from the icon on your desktop.</li>
+      </ol>
+      <ol id="steps-mac" hidden>
+        <li><b>Download</b>Press the button. The file is big, so give it a minute. ViewsCraft needs a Mac with an Apple chip (M1 or newer): Apple menu &gt; About This Mac says “Chip: Apple M…”.</li>
+        <li><b>Install</b>Open the downloaded file and drag ViewsCraft into the Applications folder.</li>
+        <li><b>Open it</b>Open ViewsCraft from Applications. If your Mac says Apple “could not verify” it, click <b style="display:inline;font-size:14px">Done</b>, open <b style="display:inline;font-size:14px">System Settings &gt; Privacy &amp; Security</b>, scroll down and click <b style="display:inline;font-size:14px">Open Anyway</b>. You only do this once.</li>
+        <li><b>Log in with Skool</b>Use your Views Craft account and start your first video. Next time, open ViewsCraft from Applications or the Dock.</li>
       </ol>
 
       <p class="foot">Not a member yet? <a href="https://www.skool.com/content-cartel-free-6805">Join Views Craft free</a></p>
     </main>
 
     <script>
-      // Points the button straight at the newest installer on GitHub, so it never needs changing
-      // when an update is published. If GitHub can't be asked, the button opens the releases page.
-      (async function () {
+      // Points the button straight at the newest installer for the visitor's computer (Windows or Mac) on GitHub, so it
+      // never needs changing when an update is published. A Windows-only update doesn't hide the Mac download: each
+      // computer gets the newest release that holds its file. If GitHub can't be asked, the button opens the releases page.
+      // Link to .../#mac to open the page on the Mac download.
+      (function () {
+        const RELEASES_PAGE = "https://github.com/aneeqxv/viewscraft-releases/releases/latest";
         const get = document.getElementById("get");
         const label = document.getElementById("label");
         const meta = document.getElementById("meta");
-        try {
-          const r = await fetch("https://api.github.com/repos/aneeqxv/viewscraft-releases/releases/latest", {
-            headers: { Accept: "application/vnd.github+json" },
-          });
-          if (r.status === 404) {
-            // nothing has been published yet
-            get.classList.add("off");
-            get.removeAttribute("href");
-            label.textContent = "Coming soon";
-            meta.textContent = "The first version isn't out yet. Check back shortly.";
+        const other = document.getElementById("other");
+        const steps = { win: document.getElementById("steps-win"), mac: document.getElementById("steps-mac") };
+        const KINDS = {
+          win: { name: "Windows", file: /^ViewsCraft-Setup-.*\.exe$/i, needs: "Windows 10 and 11" },
+          mac: { name: "Mac", file: /^ViewsCraft-.*-mac\.dmg$/i, needs: "Macs with an Apple chip (M1 or newer)" },
+        };
+        // iPads also call themselves "Macintosh"; they can't run the app, so only a Mac without a touch screen counts
+        const onMac = /Macintosh|Mac OS X/.test(navigator.userAgent) && !(navigator.maxTouchPoints > 1);
+        let kind = location.hash === "#mac" ? "mac" : location.hash === "#windows" ? "win" : onMac ? "mac" : "win";
+        let releases = null; // newest first; null while GitHub hasn't answered (or couldn't be asked)
+
+        function show() {
+          const k = KINDS[kind];
+          steps.win.hidden = kind !== "win";
+          steps.mac.hidden = kind !== "mac";
+          other.textContent = kind === "mac" ? "Download for Windows instead" : "Download for Mac instead";
+          other.href = kind === "mac" ? "#windows" : "#mac";
+          get.classList.remove("off");
+          get.href = RELEASES_PAGE;
+          label.textContent = `Download for ${k.name}`;
+          meta.textContent = `For ${k.needs}`;
+          if (!releases) return;
+          for (const release of releases) {
+            const file = (release.assets || []).find((a) => k.file.test(a.name));
+            if (!file) continue;
+            get.href = file.browser_download_url;
+            const version = String(release.tag_name || "").replace(/^v/, "");
+            meta.textContent = `Version ${version} · ${Math.round(file.size / 1048576)} MB · ${k.needs}`;
             return;
           }
-          if (!r.ok) return;
-          const release = await r.json();
-          const file = (release.assets || []).find((a) => /^ViewsCraft-Setup-.*\.exe$/i.test(a.name));
-          if (!file) return;
-          get.href = file.browser_download_url;
-          const version = String(release.tag_name || "").replace(/^v/, "");
-          const mb = Math.round(file.size / 1048576);
-          meta.textContent = `Version ${version} · ${mb} MB · Windows 10 and 11`;
-        } catch (e) {
-          /* offline or blocked: the button still opens the releases page */
+          // nothing for this computer has been published yet
+          get.classList.add("off");
+          get.removeAttribute("href");
+          label.textContent = kind === "mac" ? "Mac version coming soon" : "Coming soon";
+          meta.textContent = "This version isn't out yet. Check back shortly.";
         }
+
+        other.addEventListener("click", (e) => {
+          e.preventDefault();
+          kind = kind === "mac" ? "win" : "mac";
+          history.replaceState(null, "", kind === "mac" ? "#mac" : "#windows");
+          show();
+        });
+        show();
+        fetch("https://api.github.com/repos/aneeqxv/viewscraft-releases/releases?per_page=30", {
+          headers: { Accept: "application/vnd.github+json" },
+        })
+          .then((r) => (r.ok ? r.json() : null))
+          .then((list) => {
+            if (!Array.isArray(list)) return; // GitHub didn't answer: the button still opens the releases page
+            releases = list.filter((r) => !r.draft && !r.prerelease);
+            show();
+          })
+          .catch(() => undefined); // offline or blocked: the button still opens the releases page
       })();
     </script>
   </body>
